@@ -6,8 +6,8 @@ using UnityEngine.Networking;
 public class PlayerMovement : NetworkBehaviour
 {
   public GameObject bulletPrefab;
-  float movementSpeed = 0.1f;
-  float rotationSpeed = 2f;
+  float movementSpeed = 0.2f;
+  float rotationSpeed = 4f;
 
   void Start()
   {
@@ -48,20 +48,27 @@ public class PlayerMovement : NetworkBehaviour
   {
     if (Input.GetKey("a"))
     {
-      transform.Rotate(0, rotationSpeed, 0);
+      transform.Rotate(0, -rotationSpeed, 0);
     }
     if (Input.GetKey("d"))
     {
-      transform.Rotate(0, -rotationSpeed, 0);
+      transform.Rotate(0, rotationSpeed, 0);
     }
   }
 
   void HandleShoot()
   {
-    if (Input.GetKey("space"))
+    if (Input.GetKeyDown("space"))
     {
-      GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-      bullet.GetComponent<Bullet>().direction = transform.forward;
+      CmdShoot();
     }
+  }
+
+  [Command]
+  void CmdShoot()
+  {
+    GameObject bullet = Instantiate(bulletPrefab, transform.position + (transform.forward * 2), Quaternion.identity);
+    bullet.GetComponent<Bullet>().direction = transform.forward;
+    NetworkServer.Spawn(bullet);
   }
 }
