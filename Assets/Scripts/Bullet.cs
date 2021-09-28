@@ -15,6 +15,13 @@ public class Bullet : NetworkBehaviour
 
   void OnCollisionEnter(Collision other)
   {
+    if (isServer)
+    {
+      if (other.gameObject.tag == "Player")
+      {
+        other.gameObject.GetComponent<PlayerMovement>().life--;
+      }
+    }
     CmdDestroy(gameObject);
   }
 

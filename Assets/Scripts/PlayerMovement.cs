@@ -9,6 +9,8 @@ public class PlayerMovement : NetworkBehaviour
   float movementSpeed = 0.2f;
   float rotationSpeed = 4f;
 
+  [SyncVar(hook = "UpdateLifeBar")] public float life = 7;
+
   void Start()
   {
 
@@ -22,6 +24,11 @@ public class PlayerMovement : NetworkBehaviour
       HandleRotation();
       HandleShoot();
     }
+  }
+
+  void UpdateLifeBar(float life)
+  {
+    transform.Find("Canvas").transform.Find("LifeBar").GetComponent<RectTransform>().sizeDelta = new Vector2(life, 1);
   }
 
   void HandleMovement()
