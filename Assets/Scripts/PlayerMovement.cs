@@ -13,7 +13,10 @@ public class PlayerMovement : NetworkBehaviour
 
   void Start()
   {
-
+    if (!isLocalPlayer)
+    {
+      transform.Find("Main Camera").gameObject.SetActive(false);
+    }
   }
 
   void FixedUpdate()
@@ -28,26 +31,30 @@ public class PlayerMovement : NetworkBehaviour
 
   void UpdateLifeBar(float life)
   {
-    transform.Find("Canvas").transform.Find("LifeBar").GetComponent<RectTransform>().sizeDelta = new Vector2(life, 1);
+    transform.Find("Canvas").transform.Find("LifeBar").GetComponent<RectTransform>().sizeDelta = new Vector2(life, 0.5f);
   }
 
   void HandleMovement()
   {
     if (Input.GetKey("left"))
     {
-      transform.position += new Vector3(-movementSpeed, 0, 0);
+      //transform.position += new Vector3(-movementSpeed, 0, 0);
+      transform.Translate(-movementSpeed, 0, 0);
     }
     if (Input.GetKey("right"))
     {
-      transform.position += new Vector3(movementSpeed, 0, 0);
+      //transform.position += new Vector3(movementSpeed, 0, 0);
+      transform.Translate(movementSpeed, 0, 0);
     }
     if (Input.GetKey("up"))
     {
-      transform.position += new Vector3(0, 0, movementSpeed);
+      //transform.position += new Vector3(0, 0, movementSpeed);
+      transform.Translate(0, 0, movementSpeed);
     }
     if (Input.GetKey("down"))
     {
-      transform.position += new Vector3(0, 0, -movementSpeed);
+      //transform.position += new Vector3(0, 0, -movementSpeed);
+      transform.Translate(0, 0, -movementSpeed);
     }
   }
 
