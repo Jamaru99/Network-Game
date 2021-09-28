@@ -5,8 +5,10 @@ using UnityEngine.Networking;
 
 public class Bullet : NetworkBehaviour
 {
-  float speed = 1.2f;
+  [HideInInspector]
   public Vector3 direction;
+
+  float speed = 1.2f;
 
   void Update()
   {
@@ -19,10 +21,15 @@ public class Bullet : NetworkBehaviour
     {
       if (other.gameObject.tag == "Player")
       {
-        other.gameObject.GetComponent<PlayerMovement>().life--;
+        DecreaseLife(other.gameObject);
       }
     }
     CmdDestroy(gameObject);
+  }
+
+  void DecreaseLife(GameObject otherPlayer)
+  {
+    otherPlayer.GetComponent<Player>().life--;
   }
 
   [Command]
