@@ -78,7 +78,7 @@ public class Player : NetworkBehaviour
 
   void HandleShoot()
   {
-    if (Input.GetKeyDown("space"))
+    if (Input.GetKey("space"))
     {
       CmdShoot();
     }

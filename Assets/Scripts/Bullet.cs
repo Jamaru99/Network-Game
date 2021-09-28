@@ -10,7 +10,7 @@ public class Bullet : NetworkBehaviour
 
   float speed = 1.2f;
 
-  void Update()
+  void FixedUpdate()
   {
     transform.position += direction * speed;
   }
